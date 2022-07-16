@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideCompletedReducer, setTodosReducer } from "../redux/todosSlice";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
-/* import { todosData } from "../data/todosData"; */
 
 import {
   View,
@@ -31,17 +30,9 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const todoList = useSelector((state) => state.todos.todos);
-  /*   const sortByTime = todosData
-    .filter((i) => i.isToday)
-    .sort((a, b) => a.hour.localeCompare(b.hour))
-    .sort((a, b) => a.isCompleted - b.isCompleted); */
-  /*   const sortByTime = todoList
-    .filter((i) => i.isToday)
-    .sort((a, b) => a.hour.localeCompare(b.hour))
-    .sort((a, b) => a.isCompleted - b.isCompleted); */
-  const [expoPushToken, setExpoPushToken] = useState("");
+
+  const [, setExpoPushToken] = useState("");
   useEffect(() => {
-    /* setData(sortByTime); */
     registerForPushNotificationAsync()
       .then((token) => {
         console.log("token", token);
@@ -65,7 +56,6 @@ export default function Home() {
   }, []);
 
   const [showCompleted, setShowCompleted] = useState(false);
-  /* const [data, setData] = useState(null); */
 
   const handleShowCompleted = async () => {
     if (showCompleted) {

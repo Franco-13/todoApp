@@ -49,30 +49,16 @@ const AddToDo = () => {
   };
 
   const diaMs = 1000 * 60 * 60 * 24;
-  console.log(diaMs);
+
   const suma = date.getTime() + diaMs;
-  console.log("suma + 1 dia:", suma);
-  console.log("suma +1 dia formato largo", new Date(suma));
 
-  console.log("dia date.getTime():", date.getTime());
   let actualHour = new Date();
-  console.log(
-    "fechaActual:",
-    actualHour.getTime(),
-    " fechaActual: ",
-    actualHour
-  );
-  console.log("MAÑANA", (suma - actualHour.getTime()) / 1000);
 
-  console.log("dia", new Date(date.getTime()));
-  console.log("result", date.getTime() - actualHour.getTime());
   let resultHourTomorrow = (suma - actualHour.getTime()) / 1000;
 
   let resultHour = (date.getTime() - actualHour.getTime()) / 1000;
 
   const maniana = new Date(suma);
-
-  /* console.log("mañana", maniana); */
 
   const addTodo = async () => {
     const newTodo = {
@@ -93,7 +79,7 @@ const AddToDo = () => {
         dispatch(addTodoReducer(newTodo));
 
         if (notification) {
-          await scheduleTodoNotification(newTodo /* , resultHour */);
+          await scheduleTodoNotification(newTodo);
         }
         navigation.goBack();
       } catch (error) {
@@ -105,7 +91,7 @@ const AddToDo = () => {
     }
   };
 
-  const scheduleTodoNotification = async (todo /* , result */) => {
+  const scheduleTodoNotification = async (todo) => {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "Tienes una nueva tarea por hacer",
