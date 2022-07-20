@@ -7,7 +7,22 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { deleteTodoReducer } from "../redux/todosSlice";
 
-const TodoItem = ({ id, text, isCompleted, isToday, hour }) => {
+const TodoItem = ({
+  id,
+  text,
+  isCompleted,
+  isToday,
+  hour,
+  timestampToDisplay,
+}) => {
+  /*   const [month, day, year] =
+    timestampToDisplay?.length && timestampToDisplay[0].split("/");
+  const dateToDisplay = [day, month, year]?.join("/");
+  const hourToDisplay = timestampToDisplay?.length && timestampToDisplay[1];
+  console.log(
+    console.log("timestamp", timestampToDisplay, dateToDisplay, hourToDisplay)
+  ); */
+
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todos.todos);
 
@@ -42,7 +57,7 @@ const TodoItem = ({ id, text, isCompleted, isToday, hour }) => {
           <Text
             style={isCompleted ? [styles.text, styles.textLined] : styles.text}
           >
-            {hour}
+            {timestampToDisplay}
           </Text>
         </View>
       </View>

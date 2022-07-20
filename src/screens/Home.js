@@ -64,12 +64,10 @@ export default function Home() {
       if (todos !== null) {
         dispatch(setTodosReducer(JSON.parse(todos)));
       }
-      /* setData(sortByTime); */
       return;
     }
     setShowCompleted(!showCompleted);
     dispatch(hideCompletedReducer());
-    /* setData(sortByTime?.filter((i) => !i.isCompleted)); */
   };
 
   const registerForPushNotificationAsync = async () => {
@@ -117,7 +115,7 @@ export default function Home() {
         <Text style={styles.text}>Hoy</Text>
         <TouchableOpacity onPress={handleShowCompleted}>
           <Text style={styles.showHidenText}>
-            {showCompleted ? "Mostrar completadas" : "Oculata completadas"}
+            {showCompleted ? "Mostrar completadas" : "Ocultar completadas"}
           </Text>
         </TouchableOpacity>
       </View>

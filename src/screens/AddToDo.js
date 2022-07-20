@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTodoReducer } from "../redux/todosSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { resHour, timestampToDisplay } from "../helpers/timeHelper";
 import * as Notifications from "expo-notifications";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -30,24 +31,6 @@ const AddToDo = () => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
-  const resHour = (h, m) => {
-    let hourParse = "";
-    let minParse = "";
-
-    if (h < 10) {
-      hourParse = `0${h.toString()}`;
-    } else {
-      hourParse = `${h.toString()}`;
-    }
-    if (m < 10) {
-      minParse = `0${m.toString()}`;
-    } else {
-      minParse = `${m.toString()}`;
-    }
-
-    return `${hourParse}:${minParse}`;
-  };
-
   const diaMs = 1000 * 60 * 60 * 24;
 
   const suma = date.getTime() + diaMs;
@@ -61,14 +44,23 @@ const AddToDo = () => {
   const maniana = new Date(suma);
 
   const addTodo = async () => {
+    if (!task.length) {
+      alert("Ingrese una tarea.");
+      return;
+    }
+
     const newTodo = {
       id: Math.floor(Math.random() * 1000000),
       text: task,
       hour: isToday ? date.toString() : maniana.toString(),
       hourToNotification: isToday ? resultHour : resultHourTomorrow,
+      timestampToDisplay: isToday
+        ? timestampToDisplay(date)
+        : timestampToDisplay(maniana),
       isToday: isToday,
       isCompeted: false,
     };
+
     if ((resultHour > 0 && isToday) || (resultHourTomorrow > 0 && !isToday)) {
       try {
         await AsyncStorage.setItem(
@@ -86,7 +78,7 @@ const AddToDo = () => {
         console.log("error", error);
       }
     } else {
-      alert("La hora no es válida");
+      alert("La hora no es válida.");
       return;
     }
   };
