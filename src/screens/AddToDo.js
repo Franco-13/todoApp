@@ -70,7 +70,7 @@ const AddToDo = () => {
 
         dispatch(addTodoReducer(newTodo));
 
-        if (notification) {
+        if (notification && (resultHour > 0 || resultHourTomorrow > 0)) {
           await scheduleTodoNotification(newTodo);
         }
         navigation.goBack();
@@ -84,13 +84,25 @@ const AddToDo = () => {
   };
 
   const scheduleTodoNotification = async (todo) => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Tienes una nueva tarea por hacer",
-        body: todo.text,
-      },
-      trigger: { seconds: todo.hourToNotification },
-    });
+    const { text, hourToNotification, hour } = todo;
+    const trigger = new Date(hour);
+    trigger.setSeconds(0);
+
+    if (hourToNotification > 0) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Tienes una nueva tarea por hacer",
+          body: text,
+        },
+        trigger,
+        /* trigger: {
+          seconds: hourToNotification,
+         
+        }, */
+      });
+    } else {
+      console.log("Intervalo de notificación no válido.");
+    }
   };
 
   return (

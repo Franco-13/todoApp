@@ -32,6 +32,7 @@ export default function Home() {
   const todoList = useSelector((state) => state.todos.todos);
 
   const [, setExpoPushToken] = useState("");
+
   useEffect(() => {
     registerForPushNotificationAsync()
       .then((token) => {
@@ -49,7 +50,7 @@ export default function Home() {
           dispatch(setTodosReducer(JSON.parse(todos)));
         }
       } catch (error) {
-        console.log(error);
+        console.log("error", error);
       }
     };
     getTodos();
@@ -86,7 +87,6 @@ export default function Home() {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
       return;
     }
@@ -99,6 +99,7 @@ export default function Home() {
         lightColor: "#FF231F7C",
       });
     }
+    console.log("tok", token);
 
     return token;
   };
