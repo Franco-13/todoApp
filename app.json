@@ -24,11 +24,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.fran87.todoApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Simple toDo App"
+    "description": "Simple toDo App",
+    "extra": {
+      "eas": {
+        "projectId": "30d90173-1619-40eb-b9ed-33222d6f3527"
+      }
+    }
   }
 }
